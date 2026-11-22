@@ -12,8 +12,8 @@ cask "dialpilot" do
     strategy :github_latest
   end
 
-  depends_on macos: ">= :ventura"
   depends_on arch: :arm64
+  depends_on macos: :ventura
 
   app "DialPilot.app"
 
@@ -21,10 +21,8 @@ cask "dialpilot" do
   # first launch of this (deliberately ad-hoc signed, non-notarized) app.
   # Clearing the flag here means "brew install" ends with a working app; the
   # trust decision is the sha256 above plus this tap's provenance.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-r", "-d", "com.apple.quarantine", "#{appdir}/DialPilot.app"],
-                   sudo: false
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-r", "-d", "com.apple.quarantine", "{{appdir}}/DialPilot.app"]
   end
 
   caveats <<~EOS
