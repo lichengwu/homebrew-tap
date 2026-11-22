@@ -1,6 +1,6 @@
 cask "dialpilot" do
-  version "1.1.2"
-  sha256 "e8fe5fb1fbb270273a5238a46aac397fa5c2c2e175f8970af59a04a0ea222175"
+  version "1.1.3"
+  sha256 "76ddbc7c74169e4562399df4931a64a05c69dbfe07a2b19be1cf0cf0aa1ba31a"
 
   url "https://github.com/lichengwu/dialpilot/releases/download/v#{version}/DialPilot-#{version}.dmg"
   name "DialPilot"
