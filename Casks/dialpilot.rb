@@ -1,0 +1,39 @@
+cask "dialpilot" do
+  version "1.1.2"
+  sha256 "e8fe5fb1fbb270273a5238a46aac397fa5c2c2e175f8970af59a04a0ea222175"
+
+  url "https://github.com/lichengwu/dialpilot/releases/download/v#{version}/DialPilot-#{version}.dmg"
+  name "DialPilot"
+  desc "Menu-bar companion for the Ulanzi AU05 (VibeKey) dial controller"
+  homepage "https://github.com/lichengwu/dialpilot"
+
+  livecheck do
+    url :url
+    strategy :github_latest
+  end
+
+  depends_on macos: ">= :ventura"
+  depends_on arch: :arm64
+
+  app "DialPilot.app"
+
+  # Homebrew marks cask downloads quarantined, so Gatekeeper would block the
+  # first launch of this (deliberately ad-hoc signed, non-notarized) app.
+  # Clearing the flag here means "brew install" ends with a working app; the
+  # trust decision is the sha256 above plus this tap's provenance.
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-r", "-d", "com.apple.quarantine", "#{appdir}/DialPilot.app"],
+                   sudo: false
+  end
+
+  caveats <<~EOS
+    DialPilot is not notarized. This cask clears the quarantine flag so the app
+    opens on first launch; if you installed it another way, allow it under
+    System Settings → Privacy & Security → "Open Anyway".
+
+    After launching, grant Input Monitoring and Accessibility in
+    System Settings → Privacy & Security, and quit Ulanzi Studio first —
+    both apps talk to the same dial.
+  EOS
+end
