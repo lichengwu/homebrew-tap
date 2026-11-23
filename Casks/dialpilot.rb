@@ -34,8 +34,9 @@ cask "dialpilot" do
     System Settings → Privacy & Security, and quit Ulanzi Studio first —
     both apps talk to the same dial.
 
-    Each release is a new ad-hoc signing identity, so upgrading drops those two
-    grants while System Settings still shows the switches as on. After
-    "brew upgrade", turn DialPilot off and back on in both panes, then relaunch.
+    Since 1.1.5 every release is signed with the same fixed project certificate,
+    so Input Monitoring / Accessibility grants survive upgrades. Coming from
+    1.1.4 or older, re-grant once: turn DialPilot off and back on in both panes
+    (the switches may still look on), then relaunch. Later updates never ask.
   EOS
 end
